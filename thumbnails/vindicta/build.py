@@ -233,10 +233,10 @@ def fit_size(left: str, right: str) -> float:
     return min(MAX_SIZE, (AVAIL / SQUEEZE - TRACK * (n - 1)) / need)
 
 
-def title(left: str, right: str, size: float) -> tuple[str, str]:
-    """Return (defs, layers) for the split title; left half ends at the hair, right half starts after it."""
+def title(left: str, right: str, size: float, left_end: float = LEFT_END, right_start: float = RIGHT_START,
+          base: float = 338.0) -> tuple[str, str]:
+    """Return (defs, layers) for the split title; left half ends at left_end, right half starts at right_start."""
     font = ImageFont.truetype(str(FONT), int(size))
-    base = 338.0
 
     def half(word, anchor, align, tilt, rots, dys):
         widths = [font.getlength(ch) for ch in word]
@@ -251,8 +251,8 @@ def title(left: str, right: str, size: float) -> tuple[str, str]:
         return (f'<g transform="rotate({tilt} {f(anchor)} {f(base - size * .35)}) translate({f(anchor)} 0) '
                 f'scale({SQUEEZE} 1) translate({f(-anchor)} 0)">{"".join(els)}</g>')
 
-    glyphs = (half(left, LEFT_END, "end", 4, [-4, 2, -2, 3, -1], [0, -7, 5, -3, 4]) +
-              half(right, RIGHT_START, "start", -4, [3, -3, 2, -2, 1], [4, -5, 6, -2, 3]))
+    glyphs = (half(left, left_end, "end", 4, [-4, 2, -2, 3, -1], [0, -7, 5, -3, 4]) +
+              half(right, right_start, "start", -4, [3, -3, 2, -2, 1], [4, -5, 6, -2, 3]))
     defs = f"""
     <g id="tg" font-family="Title" font-size="{f(size)}">{glyphs}</g>
     <linearGradient id="tfill" x1="0" y1="{f(base - size * .78)}" x2="0" y2="{f(base + size * .28)}" gradientUnits="userSpaceOnUse">
@@ -336,10 +336,20 @@ DEFS = """
 """
 
 
-def build_html(left: str, right: str, size: float, seed: int) -> str:
+def build_html(left: str, right: str, size: float, seed: int, *, art: Path | None = None, show_title: bool = True,
+               left_end: float = LEFT_END, right_start: float = RIGHT_START, base: float = 338.0) -> str:
+    """Vector scene with the title behind the character, or (art=...) the title over a finished picture."""
     rng = random.Random(seed)
-    tdefs, tlayers = title(left, right, size)
-    char = (ASSETS / "vindicta.svg").read_text(encoding="utf-8")
+    tdefs, tlayers = title(left, right, size, left_end, right_start, base) if show_title else ("", "")
+    if art:
+        art64 = base64.b64encode(art.read_bytes()).decode()
+        mime = "image/png" if art.suffix.lower() == ".png" else "image/jpeg"
+        scene = (f'<image href="data:{mime};base64,{art64}" x="0" y="0" width="{W}" height="{H}" '
+                 f'preserveAspectRatio="xMidYMid slice"/>\n{tlayers}')
+    else:
+        char = (ASSETS / "vindicta.svg").read_text(encoding="utf-8")
+        scene = (f'<g filter="url(#bgBlur)">{background(rng)}</g>\n<g filter="url(#nearBlur)">{near_layer()}</g>\n'
+                 f'{tlayers}\n<g filter="url(#charShadow)">{char}</g>\n{foreground(rng)}')
     font64 = base64.b64encode(FONT.read_bytes()).decode()
     return f"""<!doctype html><html><head><meta charset="utf-8"><style>
 @font-face {{ font-family: "Title"; src: url(data:font/ttf;base64,{font64}) format("truetype"); }}
@@ -348,11 +358,7 @@ svg {{ display: block; }}
 </style></head><body>
 <svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
 <defs>{DEFS}{tdefs}</defs>
-<g filter="url(#bgBlur)">{background(rng)}</g>
-<g filter="url(#nearBlur)">{near_layer()}</g>
-{tlayers}
-<g filter="url(#charShadow)">{char}</g>
-{foreground(rng)}
+{scene}
 </svg></body></html>"""
 
 
@@ -405,15 +411,23 @@ def main() -> None:
     ap.add_argument("--name", default="vindicta_thumbnail", help="output file stem")
     ap.add_argument("--out", type=Path, default=HERE / "out")
     ap.add_argument("--html", action="store_true", help="also keep the composed HTML")
+    ap.add_argument("--art", type=Path, help="finished picture (e.g. AI output) to put the title on instead of the vector scene")
+    ap.add_argument("--no-title", action="store_true", help="leave the title out (e.g. a layout reference for AI)")
+    ap.add_argument("--left-end", type=float, default=LEFT_END, help="x where the left title half ends")
+    ap.add_argument("--right-start", type=float, default=RIGHT_START, help="x where the right title half starts")
+    ap.add_argument("--title-y", type=float, default=338.0, help="title baseline y")
     args = ap.parse_args()
 
     left, right = args.left.upper(), args.right.upper()
     size = args.size or fit_size(left, right)
-    html = build_html(left, right, size, args.seed)
+    html = build_html(left, right, size, args.seed, art=args.art, show_title=not args.no_title,
+                      left_end=args.left_end, right_start=args.right_start, base=args.title_y)
     args.out.mkdir(parents=True, exist_ok=True)
     if args.html:
         (args.out / f"{args.name}.html").write_text(html, encoding="utf-8")
-    img = grade(render(html, args.scale), args.seed)
+    img = render(html, args.scale)
+    if not args.art:  # AI pictures arrive already graded
+        img = grade(img, args.seed)
     png, jpg = args.out / f"{args.name}.png", args.out / f"{args.name}.jpg"
     img.save(png, optimize=True)
     img.save(jpg, quality=93, optimize=True, progressive=True)

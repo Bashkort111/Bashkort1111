@@ -15,9 +15,26 @@
   Gaussian blur, split title in Rubik Wet Paint (OFL), rendered by headless Chrome at 2x, graded with Pillow
   (bloom, vignette, grain).
 - Checkpoint 1 (82809d2): v1 render; title too small and partly hidden.
-- v2: title condensed to 74 % width and fitted per half (207 px), halves kept clear of the hair; hair got
-  cel shading, an anime shine band and a soft inner rim light; face got hair shadows and cheek shading;
-  magenta horizon glow behind the skyline; two proper feathers instead of four stray marks.
-- v3: removed flyaway strands (they read as white blades at the temples and bars beside the eyes).
-- v4 (final): +14 % saturation in grading so it holds up next to the channel's saturated thumbnails.
-  Final PNG/JPG committed.
+- v2–v4 (fc16941): bigger condensed title, hair/face shading, magenta horizon, feathers, +14 % saturation.
+
+## 2026-11-11 — Follow-up: find/build an AI tool that makes a thumbnail "like the reference"
+
+- The user asked for a tool (e.g. on GitHub) that generates a thumbnail like a reference they send, and to
+  make the Vindicta thumbnail with it.
+- The channel is **Di ray** (@diray, UCzB2V3zc2E4dy3-nxJoD0Yg). Its latest 15 thumbnails were downloaded at
+  1280×720 as style references (git-ignored `refs/`, the repo is public and the art is not ours).
+- GitHub tools found: yoanbernabeu/NanoThumbnail (best fit: style references, Nano Banana, browser app),
+  manuarora700/youtube-thumbnail-generator, bhancockio/adk-youtube-thumbnail-agent. All need a paid
+  Gemini/OpenAI/OpenRouter/Replicate key; the project has no keys configured.
+- Free routes checked:
+  - Hugging Face ZeroGPU demos: FLUX.2-dev works anonymously (8-step test image in 10.6 s), but the shared
+    anonymous quota for this sandbox IP then ran out ("164s requested vs. -82s left"). Qwen-Image-Edit-2511
+    rejects anonymous calls (360 s request is above the anonymous maximum).
+  - Pollinations: the new API needs a key; the keyless Classic API allows `flux` and `gptimage`
+    (1 image / 45 s per IP); kontext, nanobanana and seedream need a key.
+  - Omni Image Editor Space requires a Cloudflare Turnstile token: skipped.
+- Built `thumbgen/thumbgen.py`: `grab` (full-res thumbnails from video links/IDs or a channel's latest
+  uploads via RSS) and `gen` (FLUX.2-dev Space via gradio_client, style + character + layout references,
+  title lettered by AI or overlaid). `thumbnails/vindicta/build.py` gained `--art`, `--no-title`,
+  `--left-end`, `--right-start`, `--title-y` so it can put the exact title over an AI picture.
+- Checkpoint 3: tool committed; testing Pollinations `gptimage` with reference images.

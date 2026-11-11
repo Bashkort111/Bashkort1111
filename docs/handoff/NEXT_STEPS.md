@@ -1,7 +1,9 @@
 # Next steps
 
-1. Get the user's verdict and the real title word. Re-render with
-   `uv run thumbnails/vindicta/build.py --left <ЛЕВАЯ> --right <ПРАВАЯ> --name <stem>`
-   (the size auto-fits; keep halves to about 3–5 letters).
-2. Optional tweaks if asked: palette (e.g. icy moon instead of blood moon), a rifle or laser sight for the
-   sniper angle, different crow placement, `--seed` for another city layout.
+1. Evaluate the Pollinations `gptimage` result. If it is good, add `--provider pollinations` to
+   `thumbgen gen` (reference images must be public URLs; grabbed YouTube thumbnails map back to
+   i.ytimg.com automatically).
+2. If quality or limits are not good enough, ask the user to add `HF_TOKEN` (free Hugging Face account) or
+   a Gemini key as a project variable, then run `thumbgen gen` with FLUX.2-dev (or a Gemini provider).
+3. Overlay mode: generate clean art, then draw the exact title with `build.py --art`.
+4. Document thumbgen usage in README.md and share results with the user.
