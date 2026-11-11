@@ -1,0 +1,6 @@
+/* Studio (/app) stylesheet: Tailwind scans everything, including shadcn components. */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+@import './tokens.css';
