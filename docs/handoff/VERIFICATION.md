@@ -21,3 +21,7 @@ tool runs and visual review.
 | tool | `thumbgen.py gen` FLUX.2-dev, 2 refs, 28 steps | FAILED: "exceeded your ZeroGPU quota (164s requested vs. -82s left)" |
 | tool | Qwen/Qwen-Image-Edit-2511 anonymous | FAILED: "requested GPU duration (360s) is larger than the maximum allowed" |
 | tool | Pollinations: gen.pollinations.ai anonymous / classic kontext, nanobanana, seedream | 401 key required / 403 not in Classic API |
+| tool | Pollinations Classic `model=gptimage` + 2 reference URLs, keyless | HTTP 200 in 5.2 s, 1024×576, but EXIF Make = `sana`: references ignored, watermark added |
+| tool | `uv run -q thumbgen/thumbgen.py gen --help`, `uv run -q thumbnails/vindicta/build.py --help` | Both resolve dependencies and print usage |
+| tool | `build.py --art <picture> --left ВИНД --right ИКТА` | 1280×720 RGB; title drawn crisply left/right of a centred head |
+| tool | `thumbgen.py gen` end to end with references | NOT VERIFIED: needs ZeroGPU quota (HF_TOKEN) |

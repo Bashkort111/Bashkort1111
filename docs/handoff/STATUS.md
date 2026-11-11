@@ -1,11 +1,12 @@
 # Status
 
-- **State:** WIP (follow-up). The vector thumbnail is final
-  (`thumbnails/vindicta/out/vindicta_thumbnail.jpg`). The AI generator tool `thumbgen/thumbgen.py` is
-  written: `grab` is verified; `gen` (FLUX.2-dev) has not produced a result yet, because the anonymous
-  ZeroGPU quota for this IP is exhausted.
-- **In progress:** testing the keyless Pollinations `gptimage` model with the ТИТАНЫ thumbnail and the
-  Vindicta card as references.
+- **State:** blocked on the user (needs an access key). The vector thumbnail is final
+  (`thumbnails/vindicta/out/vindicta_thumbnail.jpg`).
+- **thumbgen:** `grab` verified (channel @handle and single video). `gen` (FLUX.2-dev on Hugging Face) is
+  written and its API call matches the Space's signature, but it has **not produced an image with references
+  yet**: the anonymous ZeroGPU quota for this sandbox IP is exhausted. Overlay mode (`build.py --art`) verified.
+- **No keyless route works:** Pollinations Classic silently falls back to `sana` (ignores references, adds a
+  watermark); Qwen-Image-Edit rejects anonymous calls; Omni Image Editor needs a Turnstile token.
+- **Asked the user:** free HF token (`HF_TOKEN`, ~3 FLUX.2 images/day), Gemini key (`GEMINI_API_KEY`, Nano
+  Banana, best quality, paid per image), or run NanoThumbnail themselves.
 - **Assumptions:** character = Vindicta; title = ВИНДИКТА split ВИНД | ИКТА (the video title was not given).
-- **Blocker for reliable AI generation:** no API key or HF token in the project. A free Hugging Face
-  token (HF_TOKEN) lifts the anonymous ZeroGPU limit; a Gemini key would enable Nano Banana (NanoThumbnail).

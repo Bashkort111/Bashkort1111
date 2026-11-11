@@ -229,7 +229,8 @@ def main() -> None:
     n.add_argument("--prompt", default="", help="use this exact prompt instead of the built one")
     n.add_argument("--count", type=int, default=1, help="number of variants (seed, seed+1, …)")
     n.add_argument("--seed", type=int, default=2026)
-    n.add_argument("--steps", type=int, default=28)
+    # 24 steps with two references asks ZeroGPU for 144 s, so a free account (300 s/day) gets ~3 images
+    n.add_argument("--steps", type=int, default=24)
     n.add_argument("--guidance", type=float, default=4.0)
     n.add_argument("--width", type=int, default=1024, help="the demo allows 256..1024")
     n.add_argument("--height", type=int, default=576)

@@ -37,4 +37,13 @@
   uploads via RSS) and `gen` (FLUX.2-dev Space via gradio_client, style + character + layout references,
   title lettered by AI or overlaid). `thumbnails/vindicta/build.py` gained `--art`, `--no-title`,
   `--left-end`, `--right-start`, `--title-y` so it can put the exact title over an AI picture.
-- Checkpoint 3: tool committed; testing Pollinations `gptimage` with reference images.
+- Checkpoint 3 (0329fa2): tool committed; testing Pollinations `gptimage` with reference images.
+- Pollinations Classic test: the keyless `gptimage` request returned in 5 s, but the JPEG's EXIF says the model
+  was `sana`: references ignored (generic dark-haired girl), pollinations.ai watermark despite `nologo`.
+  Unusable for style copying.
+- Hugging Face ZeroGPU quotas (docs, Nov 2026): 2 min/day unauthenticated (per IP), 5 min/day free account,
+  40 min/day PRO; `xlarge` Spaces such as FLUX.2-dev count 2×; quota resets 24 h after first use.
+  `thumbgen gen` default steps lowered 28 → 24 (2 refs → 144 s requested) so a free account gets ~3 images/day.
+- README documents thumbgen. `uv run` verified for both scripts; `build.py --art` overlay smoke-tested.
+- Checkpoint 4: waiting for the user to choose how to unlock generation (free HF token, Gemini key, or
+  NanoThumbnail themselves).
