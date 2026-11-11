@@ -2,33 +2,33 @@
   <!-- Vindicta (Deadlock) bust, drawn in thumbnail coordinates (1280x720), centred on x=640.
        Mirrored parts use translate(1280 0) scale(-1 1). Back light comes from the blood moon. -->
   <defs>
-    <linearGradient id="v-hair" x1="0" y1="96" x2="0" y2="660" gradientUnits="userSpaceOnUse">
+    <linearGradient id="v-hair" x1="0" y1="96" x2="0" y2="670" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#f3f8ff"/>
-      <stop offset=".28" stop-color="#c6d9f8"/>
-      <stop offset=".68" stop-color="#93acdf"/>
-      <stop offset="1" stop-color="#6178bb"/>
+      <stop offset=".26" stop-color="#c8dbf9"/>
+      <stop offset=".66" stop-color="#93acdf"/>
+      <stop offset="1" stop-color="#5d73b7"/>
     </linearGradient>
-    <linearGradient id="v-hairBack" x1="0" y1="96" x2="0" y2="600" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#7c93cc"/>
-      <stop offset="1" stop-color="#2f3b74"/>
+    <linearGradient id="v-hairBack" x1="0" y1="90" x2="0" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7890cb"/>
+      <stop offset="1" stop-color="#2b366e"/>
     </linearGradient>
     <radialGradient id="v-skin" cx="632" cy="236" r="225" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#d3defd"/>
+      <stop offset="0" stop-color="#d5e0fe"/>
       <stop offset=".55" stop-color="#a9b9ec"/>
-      <stop offset="1" stop-color="#7484c8"/>
+      <stop offset="1" stop-color="#7181c6"/>
     </radialGradient>
     <linearGradient id="v-neck" x1="0" y1="372" x2="0" y2="470" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#3b4185"/>
-      <stop offset=".5" stop-color="#6c7cc0"/>
-      <stop offset="1" stop-color="#8d9fdb"/>
+      <stop offset="0" stop-color="#363c80"/>
+      <stop offset=".5" stop-color="#6a7abf"/>
+      <stop offset="1" stop-color="#8b9dda"/>
     </linearGradient>
     <linearGradient id="v-coat" x1="0" y1="450" x2="0" y2="720" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#bb2340"/>
+      <stop offset="0" stop-color="#c0243f"/>
       <stop offset=".45" stop-color="#8a142c"/>
       <stop offset="1" stop-color="#2a030d"/>
     </linearGradient>
     <linearGradient id="v-lapel" x1="0" y1="480" x2="0" y2="720" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#d23350"/>
+      <stop offset="0" stop-color="#d63653"/>
       <stop offset="1" stop-color="#5c0a1d"/>
     </linearGradient>
     <linearGradient id="v-gold" x1="0" y1="462" x2="0" y2="498" gradientUnits="userSpaceOnUse">
@@ -45,44 +45,70 @@
     <filter id="v-b3" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
     <filter id="v-b6" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
     <filter id="v-b10" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="10"/></filter>
-    <filter id="v-b18" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="18"/></filter>
 
     <path id="v-face" d="M 640 132 C 706 132, 738 186, 737 252 C 736 300, 724 338, 700 370 C 682 395, 662 416, 640 420 C 618 416, 598 395, 580 370 C 556 338, 544 300, 543 252 C 542 186, 574 132, 640 132 Z"/>
     <path id="v-neckShape" d="M 606 368 C 606 400, 604 432, 598 466 L 682 466 C 676 432, 674 400, 674 368 Z"/>
     <clipPath id="v-faceClip"><use href="#v-face"/></clipPath>
     <clipPath id="v-neckClip"><use href="#v-neckShape"/></clipPath>
 
-    <!-- left-side (viewer's left) halves; the right side is the mirror -->
-    <path id="v-curtain" d="M 640 100 C 582 100, 530 138, 516 204 C 505 258, 510 322, 506 392 C 502 452, 492 520, 470 592 L 492 578 L 488 630 L 512 590 L 520 652 L 538 600 L 554 642 L 560 584 C 574 524, 586 474, 590 432 C 592 402, 580 382, 570 356 C 559 326, 555 294, 557 262 C 561 220, 586 176, 640 132 Z"/>
-    <path id="v-curtainRim" d="M 640 100 C 582 100, 530 138, 516 204 C 505 258, 510 322, 506 392 C 502 452, 492 520, 470 592"/>
+    <!-- hair: left (viewer's left) halves, the right side is the mirror -->
+    <path id="v-back" d="M 640 86 C 556 86, 500 142, 494 232 C 488 312, 484 396, 466 470 C 456 512, 440 548, 420 578 L 456 568 L 444 612 L 486 582 L 494 624 L 526 584 L 754 584 L 786 624 L 794 582 L 836 612 L 824 568 L 860 578 C 840 548, 824 512, 814 470 C 796 396, 792 312, 786 232 C 780 142, 724 86, 640 86 Z"/>
+    <path id="v-backEdge" d="M 640 86 C 556 86, 500 142, 494 232 C 488 312, 484 396, 466 470 C 456 512, 440 548, 420 578"/>
+    <clipPath id="v-backClip"><use href="#v-back"/></clipPath>
+    <path id="v-curtain" d="M 640 98 C 584 96, 536 124, 520 184 C 510 222, 510 262, 512 300 C 514 344, 506 388, 500 430 C 494 476, 486 520, 470 566 C 462 590, 452 612, 440 630 L 470 612 L 466 660 L 494 620 L 500 676 L 520 628 L 534 668 L 546 620 L 560 650 L 566 600 C 576 548, 588 492, 590 444 C 592 410, 582 388, 572 362 C 561 332, 556 298, 558 264 C 561 222, 586 176, 640 134 Z"/>
+    <path id="v-curtainOuter" d="M 640 98 C 584 96, 536 124, 520 184 C 510 222, 510 262, 512 300 C 514 344, 506 388, 500 430 C 494 476, 486 520, 470 566 C 462 590, 452 612, 440 630"/>
+    <path id="v-curtainInner" d="M 640 134 C 586 176, 561 222, 558 264 C 556 298, 561 332, 572 362 C 582 388, 592 410, 590 444 C 588 492, 576 548, 566 600"/>
+    <clipPath id="v-curtainClip"><use href="#v-curtain"/></clipPath>
     <path id="v-eyeL" d="M 624 284 C 614 269, 592 263, 574 272 C 586 286, 606 293, 624 284 Z"/>
 
-    <g id="v-hairStrands" fill="none" stroke-linecap="round">
-      <path d="M 628 108 C 590 120, 548 160, 536 220 C 528 280, 532 350, 526 420 C 522 480, 512 540, 500 600" stroke="#6d86c5" stroke-width="2.2" opacity=".85"/>
-      <path d="M 612 116 C 582 140, 562 190, 552 240 C 546 300, 548 360, 546 420 C 544 480, 538 540, 530 612" stroke="#6d86c5" stroke-width="1.6" opacity=".8"/>
-      <path d="M 586 170 C 568 210, 560 252, 561 300 C 562 340, 572 372, 584 404 C 588 440, 584 500, 574 560" stroke="#4f64a6" stroke-width="3" opacity=".75"/>
-      <path d="M 560 330 C 556 400, 552 470, 540 560" stroke="#5a70b2" stroke-width="1.5" opacity=".7"/>
-      <path d="M 600 104 C 560 112, 530 150, 522 210 C 515 270, 520 340, 516 400" stroke="#f7fbff" stroke-width="2.6" opacity=".9"/>
-      <path d="M 636 118 C 606 128, 582 160, 570 204" stroke="#f7fbff" stroke-width="2" opacity=".75"/>
-      <path d="M 540 260 C 536 320, 538 380, 532 440" stroke="#eef5ff" stroke-width="1.6" opacity=".55"/>
-      <path d="M 562 148 C 586 128, 614 118, 636 116" stroke="#ffffff" stroke-width="5" opacity=".5" filter="url(#v-b1)"/>
+    <g id="v-backHalf">
+      <g clip-path="url(#v-backClip)">
+        <use href="#v-backEdge" fill="none" stroke="#ff4a3a" stroke-width="16" opacity=".5" filter="url(#v-b6)"/>
+        <use href="#v-backEdge" fill="none" stroke="#ff8a70" stroke-width="4" opacity=".75" filter="url(#v-b1)"/>
+        <path d="M 520 200 C 508 300, 504 400, 486 500" fill="none" stroke="#5a6db0" stroke-width="2" opacity=".6"/>
+      </g>
+    </g>
+
+    <g id="v-curtainFull">
+      <use href="#v-curtain" fill="url(#v-hair)"/>
+      <g clip-path="url(#v-curtainClip)" fill="none" stroke-linecap="round">
+        <use href="#v-curtainInner" stroke="#4a5c9e" stroke-width="34" opacity=".6" filter="url(#v-b6)"/>
+        <path d="M 548 232 C 540 300, 542 380, 534 470 C 530 520, 522 570, 512 624 L 524 624 C 532 570, 540 520, 544 470 C 552 380, 552 300, 556 232 Z" fill="#6a80c0" stroke="none" opacity=".55"/>
+        <path d="M 526 300 C 524 380, 516 450, 500 540 L 508 540 C 522 450, 530 380, 532 300 Z" fill="#7a90cc" stroke="none" opacity=".5"/>
+        <path d="M 628 108 C 590 120, 548 160, 536 220 C 528 280, 532 350, 526 420 C 522 480, 512 540, 500 600" stroke="#6d86c5" stroke-width="2.2" opacity=".85"/>
+        <path d="M 612 116 C 582 140, 562 190, 552 240 C 546 300, 548 360, 546 420 C 544 480, 538 540, 530 612" stroke="#6d86c5" stroke-width="1.6" opacity=".8"/>
+        <path d="M 560 330 C 556 400, 552 470, 540 560" stroke="#5a70b2" stroke-width="1.5" opacity=".7"/>
+        <path d="M 600 104 C 560 112, 530 150, 522 210 C 515 270, 520 340, 516 400" stroke="#f7fbff" stroke-width="2.6" opacity=".9"/>
+        <path d="M 636 118 C 606 128, 582 160, 570 204" stroke="#f7fbff" stroke-width="2" opacity=".75"/>
+        <path d="M 540 260 C 536 320, 538 380, 532 440" stroke="#eef5ff" stroke-width="1.6" opacity=".55"/>
+        <path d="M 544 172 C 568 138, 604 120, 638 116" stroke="#ffffff" stroke-width="9" opacity=".6" stroke-dasharray="22 7 34 9 14 6" filter="url(#v-b1)"/>
+        <use href="#v-curtainOuter" stroke="#ff4a3a" stroke-width="18" opacity=".55" filter="url(#v-b6)"/>
+        <use href="#v-curtainOuter" stroke="#ff9a80" stroke-width="5" opacity=".85" filter="url(#v-b1)"/>
+      </g>
+      <use href="#v-curtain" fill="none" stroke="#12112a" stroke-width="2.4" stroke-linejoin="round"/>
+    </g>
+
+    <g id="v-faceShadeHalf">
+      <use href="#v-curtainInner" fill="none" stroke="#38438a" stroke-width="34" opacity=".55" filter="url(#v-b6)"/>
+      <path d="M 566 300 C 574 330, 590 352, 612 364 C 592 356, 578 340, 570 318 Z" fill="#525c9c" opacity=".55" filter="url(#v-b1)"/>
+      <ellipse cx="600" cy="303" rx="28" ry="12" fill="#8feaff" opacity=".22" filter="url(#v-b6)" style="mix-blend-mode:screen"/>
     </g>
 
     <g id="v-eyeHalf">
       <!-- dark socket + streaked tears -->
-      <ellipse cx="599" cy="281" rx="37" ry="21" transform="rotate(-6 599 281)" fill="#1d1036" opacity=".82" filter="url(#v-b6)"/>
+      <ellipse cx="599" cy="281" rx="37" ry="21" transform="rotate(-6 599 281)" fill="#1d1036" opacity=".84" filter="url(#v-b6)"/>
       <ellipse cx="601" cy="297" rx="25" ry="8" fill="#2a1747" opacity=".55" filter="url(#v-b3)"/>
       <path d="M 599 289 C 597 310, 601 330, 598 350 C 597 362, 599 372, 601 379 C 604 372, 606 362, 605 350 C 607 330, 604 310, 607 290 Z" fill="#07040c"/>
       <circle cx="601.5" cy="381" r="3.6" fill="#07040c"/>
       <path d="M 586 288 C 584 300, 588 312, 585 326 C 587 331, 590 329, 590 325 C 592 312, 589 300, 591 289 Z" fill="#07040c"/>
       <path d="M 603 296 C 602 314, 604 332, 602 352" stroke="#8e8fd6" stroke-width="1" fill="none" opacity=".55"/>
       <!-- glow -->
-      <ellipse cx="600" cy="280" rx="36" ry="19" fill="#74e6ff" opacity=".35" filter="url(#v-b10)" style="mix-blend-mode:screen"/>
+      <ellipse cx="600" cy="280" rx="38" ry="20" fill="#74e6ff" opacity=".4" filter="url(#v-b10)" style="mix-blend-mode:screen"/>
       <use href="#v-eyeL" fill="#aaf4ff" opacity=".95" filter="url(#v-b3)"/>
       <use href="#v-eyeL" fill="url(#v-eye)"/>
       <circle cx="599" cy="278.5" r="7.5" fill="none" stroke="#66d6ff" stroke-width="1.4" opacity=".55"/>
       <!-- lids, liner, brow -->
-      <path d="M 626 286 C 614 268, 590 260, 572 270 L 560 263" fill="none" stroke="#0b0612" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M 626 286 C 614 268, 590 260, 572 270 L 559 262" fill="none" stroke="#0b0612" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M 577 274 C 590 287, 607 292, 622 286" fill="none" stroke="#1b0d2a" stroke-width="1.6" opacity=".85"/>
       <path d="M 633 263 C 618 250, 596 241, 565 243 L 562 246 C 590 249, 614 256, 629 269 Z" fill="#2a2a5a" stroke="#141230" stroke-width="1"/>
     </g>
@@ -94,11 +120,14 @@
     </g>
 
     <g id="v-coatHalf">
+      <path d="M 476 524 C 490 584, 496 650, 492 720 L 516 720 C 516 650, 508 584, 492 524 Z" fill="#4d0817" opacity=".55" filter="url(#v-b3)"/>
       <path d="M 606 484 L 588 482 C 572 540, 558 610, 550 720 L 570 720 C 578 640, 592 562, 614 500 Z" fill="url(#v-lapel)" stroke="#1a0208" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="M 588 486 C 573 540, 559 610, 551 720" fill="none" stroke="#e0aa45" stroke-width="2" opacity=".8"/>
       <path d="M 372 600 C 400 610, 430 650, 440 720 L 352 720 Z" fill="#1c0208" opacity=".6" filter="url(#v-b6)"/>
       <path d="M 468 498 C 462 560, 458 640, 460 720" fill="none" stroke="#4a0716" stroke-width="3" opacity=".7"/>
       <ellipse cx="474" cy="516" rx="52" ry="15" transform="rotate(-22 474 516)" fill="#e3485e" opacity=".35" filter="url(#v-b6)"/>
-      <path d="M 596 454 C 548 468, 482 486, 440 514 C 404 538, 380 574, 368 626" fill="none" stroke="#ff6a55" stroke-width="3" opacity=".75" stroke-linecap="round"/>
+      <path d="M 596 454 C 548 468, 482 486, 440 514 C 404 538, 380 574, 368 626" fill="none" stroke="#ff6a55" stroke-width="7" opacity=".35" stroke-linecap="round" filter="url(#v-b3)"/>
+      <path d="M 596 454 C 548 468, 482 486, 440 514 C 404 538, 380 574, 368 626" fill="none" stroke="#ff8a74" stroke-width="2" opacity=".7" stroke-linecap="round"/>
     </g>
 
     <g id="v-collarFlap">
@@ -108,9 +137,10 @@
   </defs>
 
   <!-- back hair -->
-  <path d="M 640 90 C 552 90, 492 150, 486 244 C 480 330, 470 420, 446 500 L 428 562 L 470 540 L 462 592 L 500 548 L 520 600 L 560 540 L 720 540 L 760 600 L 780 548 L 818 592 L 810 540 L 852 562 L 834 500 C 810 420, 800 330, 794 244 C 788 150, 728 90, 640 90 Z" fill="url(#v-hairBack)" stroke="#121130" stroke-width="2.5" stroke-linejoin="round"/>
-  <path d="M 640 90 C 552 90, 492 150, 486 244 C 480 330, 470 420, 446 500" fill="none" stroke="#ff5a46" stroke-width="2.5" opacity=".7"/>
-  <path d="M 640 90 C 728 90, 788 150, 794 244 C 800 330, 810 420, 834 500" fill="none" stroke="#ff5a46" stroke-width="2.5" opacity=".7"/>
+  <use href="#v-back" fill="url(#v-hairBack)"/>
+  <use href="#v-backHalf"/>
+  <use href="#v-backHalf" transform="translate(1280 0) scale(-1 1)"/>
+  <use href="#v-back" fill="none" stroke="#121130" stroke-width="2.4" stroke-linejoin="round"/>
 
   <!-- coat -->
   <path d="M 596 452 C 548 466, 482 484, 440 512 C 404 536, 380 572, 368 624 L 352 720 L 928 720 L 912 624 C 900 572, 876 536, 840 512 C 798 484, 732 466, 684 452 Z" fill="url(#v-coat)" stroke="#16020a" stroke-width="3" stroke-linejoin="round"/>
@@ -141,10 +171,10 @@
   <g clip-path="url(#v-faceClip)">
     <path d="M 543 226 C 556 300, 582 362, 622 424 L 536 424 Z" fill="#5a65aa" opacity=".55" filter="url(#v-b10)"/>
     <ellipse cx="640" cy="182" rx="36" ry="24" fill="#e7eeff" opacity=".5" filter="url(#v-b6)"/>
-    <path d="M 584 318 C 594 334, 604 346, 614 352" fill="none" stroke="#5c68ad" stroke-width="8" opacity=".35" stroke-linecap="round" filter="url(#v-b3)"/>
-    <path d="M 696 318 C 686 334, 676 346, 666 352" fill="none" stroke="#5c68ad" stroke-width="8" opacity=".3" stroke-linecap="round" filter="url(#v-b3)"/>
+    <use href="#v-faceShadeHalf"/>
+    <use href="#v-faceShadeHalf" transform="translate(1280 0) scale(-1 1)"/>
     <ellipse cx="640" cy="405" rx="15" ry="6" fill="#dfe8ff" opacity=".45" filter="url(#v-b3)"/>
-    <path d="M 726 236 C 734 290, 722 340, 700 372" fill="none" stroke="#ff6b5a" stroke-width="5" opacity=".55" filter="url(#v-b3)"/>
+    <ellipse cx="640" cy="394" rx="15" ry="4.5" fill="#4c5597" opacity=".45" filter="url(#v-b3)"/>
   </g>
 
   <!-- eyes, tears, brows -->
@@ -165,20 +195,13 @@
   <!-- mouth -->
   <path d="M 612 372 C 622 365, 632 364, 640 368 C 648 364, 658 365, 668 372 C 656 375, 648 376, 640 376 C 632 376, 624 375, 612 372 Z" fill="#4a1c52"/>
   <path d="M 616 374 C 628 378, 652 378, 664 374 C 656 389, 624 389, 616 374 Z" fill="#5f2868"/>
-  <path d="M 610 371 C 626 377, 654 377, 670 371" fill="none" stroke="#1d0822" stroke-width="2.6" stroke-linecap="round"/>
-  <path d="M 611 372 L 607 378 M 669 372 L 673 378" stroke="#2a0f30" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 611 372 C 626 377, 654 377, 669 372" fill="none" stroke="#1d0822" stroke-width="2.6" stroke-linecap="round"/>
   <ellipse cx="642" cy="381" rx="9" ry="2.6" fill="#b47bb8" opacity=".7"/>
 
   <!-- front hair curtains -->
-  <use href="#v-curtain" fill="url(#v-hair)" stroke="#12112a" stroke-width="2.6" stroke-linejoin="round"/>
-  <use href="#v-curtain" transform="translate(1280 0) scale(-1 1)" fill="url(#v-hair)" stroke="#12112a" stroke-width="2.6" stroke-linejoin="round"/>
-  <use href="#v-hairStrands"/>
-  <use href="#v-hairStrands" transform="translate(1280 0) scale(-1 1)"/>
+  <use href="#v-curtainFull"/>
+  <use href="#v-curtainFull" transform="translate(1280 0) scale(-1 1)"/>
   <path d="M 640 100 L 640 132" stroke="#3d4f8f" stroke-width="2.5"/>
-  <use href="#v-curtainRim" fill="none" stroke="#ff5a46" stroke-width="7" opacity=".45" filter="url(#v-b3)"/>
-  <use href="#v-curtainRim" fill="none" stroke="#ff8a6e" stroke-width="2.4" opacity=".9"/>
-  <use href="#v-curtainRim" transform="translate(1280 0) scale(-1 1)" fill="none" stroke="#ff5a46" stroke-width="7" opacity=".45" filter="url(#v-b3)"/>
-  <use href="#v-curtainRim" transform="translate(1280 0) scale(-1 1)" fill="none" stroke="#ff8a6e" stroke-width="2.4" opacity=".9"/>
 
   <!-- crow familiar on her left shoulder (viewer's right) -->
   <g transform="translate(872 532) scale(1.15)">

@@ -1,7 +1,7 @@
 # Next steps
 
-1. v2 design pass: larger, fully visible title (horizontally condensed Rubik Wet Paint, halves kept clear of
-   the hair); hair flyaways, cel shading and a soft inner rim light; stronger face shading; brighter horizon
-   glow behind the skyline; better feathers.
-2. Check legibility at YouTube grid size next to the channel's existing thumbnails.
-3. Final render, commit the PNG and JPG outputs, share with the user, and offer to swap the title text.
+1. Get the user's verdict and the real title word. Re-render with
+   `uv run thumbnails/vindicta/build.py --left <ЛЕВАЯ> --right <ПРАВАЯ> --name <stem>`
+   (the size auto-fits; keep halves to about 3–5 letters).
+2. Optional tweaks if asked: palette (e.g. icy moon instead of blood moon), a rifle or laser sight for the
+   sniper angle, different crow placement, `--seed` for another city layout.

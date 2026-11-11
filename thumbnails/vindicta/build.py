@@ -172,7 +172,7 @@ def background(rng) -> str:
             '<ellipse cx="720" cy="150" rx="180" ry="8"/><ellipse cx="540" cy="108" rx="130" ry="6"/>'
             '<ellipse cx="300" cy="300" rx="260" ry="9"/><ellipse cx="1000" cy="250" rx="240" ry="9"/></g>']
     # far city + landmarks
-    far = "#1b1838"
+    far = "#1d1533"
     out.append('<g>')
     out += landmarks(far)
     out += skyline(rng, top=(330, 450), width=(40, 105), color=far, win=(2.5, 4, 5, 7), lit=.16,
@@ -188,7 +188,7 @@ def background(rng) -> str:
             py = (1 - t) ** 2 * y0 + 2 * (1 - t) * t * ym + t * t * y1
             out.append(f'<circle cx="{f(px)}" cy="{f(py)}" r="2.6" fill="#ffd98a"/>')
     # mid city
-    mid = "#0e0c20"
+    mid = "#0d0b1d"
     out += skyline(rng, top=(470, 590), width=(60, 140), color=mid, win=(5, 8, 7, 10), lit=.3,
                    roofs={"flat": 3, "step": 1, "tank": 3, "spire": 1})
     out.append('<rect x="-80" y="420" width="1440" height="340" fill="url(#fog)"/>')
@@ -221,25 +221,38 @@ def near_layer() -> str:
 
 
 # ---------------------------------------------------------------- title ----
+# Title halves sit left/right of the hair silhouette (x 494..786 at text height), condensed horizontally
+# because Rubik Wet Paint is wide; the font size is fitted so the wider half spans AVAIL px.
+LEFT_END, RIGHT_START, AVAIL, SQUEEZE, TRACK, MAX_SIZE = 494.0, 786.0, 470.0, .74, -6.0, 240.0
+
+
+def fit_size(left: str, right: str) -> float:
+    font = ImageFont.truetype(str(FONT), 100)
+    need = max(sum(font.getlength(c) for c in w) / 100 for w in (left, right))
+    n = max(len(left), len(right))
+    return min(MAX_SIZE, (AVAIL / SQUEEZE - TRACK * (n - 1)) / need)
+
+
 def title(left: str, right: str, size: float) -> tuple[str, str]:
     """Return (defs, layers) for the split title; left half ends at the hair, right half starts after it."""
     font = ImageFont.truetype(str(FONT), int(size))
-    base, track = 338.0, -4.0
+    base = 338.0
 
     def half(word, anchor, align, tilt, rots, dys):
         widths = [font.getlength(ch) for ch in word]
-        total = sum(widths) + track * (len(word) - 1)
+        total = sum(widths) + TRACK * (len(word) - 1)
         x = anchor - total if align == "end" else anchor
         els = []
         for i, ch in enumerate(word):
             cx, y = x + widths[i] / 2, base + dys[i % len(dys)]
             els.append(f'<text x="{f(x)}" y="{f(y)}" transform="rotate({rots[i % len(rots)]} {f(cx)} {f(y - size * .35)})">'
                        f'{escape(ch)}</text>')
-            x += widths[i] + track
-        return f'<g transform="rotate({tilt} {f(anchor)} {f(base - size * .35)})">{"".join(els)}</g>'
+            x += widths[i] + TRACK
+        return (f'<g transform="rotate({tilt} {f(anchor)} {f(base - size * .35)}) translate({f(anchor)} 0) '
+                f'scale({SQUEEZE} 1) translate({f(-anchor)} 0)">{"".join(els)}</g>')
 
-    glyphs = (half(left, 530, "end", 4, [-4, 2, -2, 3, -1], [0, -7, 5, -3, 4]) +
-              half(right, 750, "start", -4, [3, -3, 2, -2, 1], [4, -5, 6, -2, 3]))
+    glyphs = (half(left, LEFT_END, "end", 4, [-4, 2, -2, 3, -1], [0, -7, 5, -3, 4]) +
+              half(right, RIGHT_START, "start", -4, [3, -3, 2, -2, 1], [4, -5, 6, -2, 3]))
     defs = f"""
     <g id="tg" font-family="Title" font-size="{f(size)}">{glyphs}</g>
     <linearGradient id="tfill" x1="0" y1="{f(base - size * .78)}" x2="0" y2="{f(base + size * .28)}" gradientUnits="userSpaceOnUse">
@@ -257,15 +270,18 @@ def title(left: str, right: str, size: float) -> tuple[str, str]:
 
 
 # ----------------------------------------------------------- foreground ----
-FEATHER = "M 0 0 C 7 -12, 9 -34, 2 -58 C -6 -36, -7 -14, 0 0 Z"
+FEATHER = ("M 0 0 C 9 -10, 13 -32, 7 -60 L 3 -54 L 5 -68 C 3 -74, 0 -77, -2 -79 C -7 -62, -11 -40, -9 -22 "
+           "L -4 -26 L -8 -12 C -6 -7, -3 -3, 0 0 Z")
 
 
 def foreground(rng) -> str:
     out = []
-    for x, y, s, r in [(410, 610, 1.0, -38), (1028, 470, .85, 52), (262, 470, .7, 18), (996, 640, 1.1, -64)]:
+    for x, y, s, r in [(318, 640, 1.35, -32), (1010, 610, 1.2, 58)]:
         out.append(f'<g transform="translate({x} {y}) rotate({r}) scale({s})">'
-                   f'<path d="{FEATHER}" fill="#0b0a14" stroke="#ff6a55" stroke-width="1" stroke-opacity=".55"/>'
-                   f'<path d="M 0 6 L 1.5 -54" stroke="#2c2c4c" stroke-width="1.4"/></g>')
+                   f'<path d="{FEATHER}" fill="#0b0a14" stroke="#ff6a55" stroke-width=".9" stroke-opacity=".6"/>'
+                   f'<path d="M 1 8 L -1 -74" stroke="#34345a" stroke-width="1.3"/>'
+                   f'<path d="M -1 -12 L 6 -19 M -2 -26 L 8 -34 M -2 -40 L 8 -49 M -3 -54 L 5 -62 M -2 -18 L -7 -24 '
+                   f'M -3 -34 L -9 -41 M -3 -50 L -8 -57" stroke="#22223e" stroke-width=".9"/></g>')
     for _ in range(26):
         x, y = rng.uniform(20, W - 20), rng.uniform(380, 700)
         if 330 < x < 950 and y > 430:
@@ -277,8 +293,9 @@ def foreground(rng) -> str:
 # ------------------------------------------------------------- assemble ----
 DEFS = """
 <linearGradient id="sky" x1="0" y1="0" x2="0" y2="720" gradientUnits="userSpaceOnUse">
-  <stop offset="0" stop-color="#04060f"/><stop offset=".35" stop-color="#0a1029"/>
-  <stop offset=".62" stop-color="#1a1636"/><stop offset=".82" stop-color="#3a1a33"/><stop offset="1" stop-color="#5a2230"/>
+  <stop offset="0" stop-color="#04060f"/><stop offset=".3" stop-color="#0a0f28"/>
+  <stop offset=".45" stop-color="#1e1539"/><stop offset=".56" stop-color="#5c1e42"/>
+  <stop offset=".68" stop-color="#3c1736"/><stop offset="1" stop-color="#14091b"/>
 </linearGradient>
 <radialGradient id="moon" cx="600" cy="196" r="270" gradientUnits="userSpaceOnUse">
   <stop offset="0" stop-color="#ffb08a"/><stop offset=".4" stop-color="#f0603f"/>
@@ -294,8 +311,8 @@ DEFS = """
   <feColorMatrix type="matrix" values="0 0 0 0 .33  0 0 0 0 .03  0 0 0 0 .05  0 0 0 -2.4 1.45"/>
 </filter>
 <linearGradient id="haze" x1="0" y1="300" x2="0" y2="760" gradientUnits="userSpaceOnUse">
-  <stop offset="0" stop-color="#3b2f63" stop-opacity="0"/><stop offset=".45" stop-color="#4a3a72" stop-opacity=".35"/>
-  <stop offset="1" stop-color="#2a1d45" stop-opacity=".15"/>
+  <stop offset="0" stop-color="#5a2a5a" stop-opacity="0"/><stop offset=".45" stop-color="#5a2a5a" stop-opacity=".2"/>
+  <stop offset="1" stop-color="#2a1d45" stop-opacity=".1"/>
 </linearGradient>
 <linearGradient id="fog" x1="0" y1="420" x2="0" y2="760" gradientUnits="userSpaceOnUse">
   <stop offset="0" stop-color="#5a4a86" stop-opacity="0"/><stop offset=".5" stop-color="#5a4a86" stop-opacity=".28"/>
@@ -371,6 +388,9 @@ def grade(img: Image.Image, seed: int) -> Image.Image:
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
     d = np.sqrt(((xx - W / 2) / (W / 2)) ** 2 + ((yy - H * .46) / (H / 2)) ** 2)
     a *= (1 - .42 * np.clip(d - .62, 0, 1) ** 1.2)[..., None]
+    # extra saturation so it holds up next to the channel's very saturated thumbnails
+    gray = (a @ np.array([.2126, .7152, .0722], dtype=np.float32))[..., None]
+    a = gray + (a - gray) * 1.14
     a += np.random.default_rng(seed).normal(0, .014, (H, W, 1)).astype(np.float32)
     return Image.fromarray((np.clip(a, 0, 1) * 255 + .5).astype(np.uint8))
 
@@ -387,12 +407,9 @@ def main() -> None:
     ap.add_argument("--html", action="store_true", help="also keep the composed HTML")
     args = ap.parse_args()
 
-    size = args.size
-    if not size:
-        font = ImageFont.truetype(str(FONT), 100)
-        widest = max(font.getlength(args.left), font.getlength(args.right)) / 100
-        size = min(215.0, 480.0 / widest)
-    html = build_html(args.left.upper(), args.right.upper(), size, args.seed)
+    left, right = args.left.upper(), args.right.upper()
+    size = args.size or fit_size(left, right)
+    html = build_html(left, right, size, args.seed)
     args.out.mkdir(parents=True, exist_ok=True)
     if args.html:
         (args.out / f"{args.name}.html").write_text(html, encoding="utf-8")

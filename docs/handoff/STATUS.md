@@ -1,8 +1,11 @@
 # Status
 
-- **State:** WIP. v1 of the Vindicta thumbnail renders end to end
-  (`thumbnails/vindicta/out/vindicta_thumbnail.jpg`).
-- **Known v1 issues:** title only 152 px and its inner letters (Д, И) are hidden behind the hair; hair
-  silhouette too uniform; red rim light reads as an outline; background horizon a bit flat; foreground
-  feathers look like stray marks.
-- **Open question for the user:** the actual video title (default text is the hero name ВИНДИКТА).
+- **State:** done, pending the user's feedback. Final thumbnail:
+  `thumbnails/vindicta/out/vindicta_thumbnail.jpg` (upload this) and `.png` (lossless), 1280×720.
+- **Design:** Vindicta bust centred with glowing eyes and black tears, crow familiar on her shoulder, title
+  ВИНД | ИКТА split around her head, blurred Deadlock-style night city (rooftops, water towers, ziplines)
+  under a blood moon.
+- **Assumptions to confirm with the user:** the character is Vindicta (from "Venedikt Dedlok"); the title
+  text is the hero name because the video title was not given.
+- **Limits:** the art is hand-coded vector, so it is cleaner and flatter than the painted thumbnails the
+  channel's artist makes.

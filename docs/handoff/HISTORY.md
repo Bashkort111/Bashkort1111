@@ -14,4 +14,10 @@
   city (art-deco tower, gothic spires, water towers, ziplines, warm windows) under a blood moon with a
   Gaussian blur, split title in Rubik Wet Paint (OFL), rendered by headless Chrome at 2x, graded with Pillow
   (bloom, vignette, grain).
-- Checkpoint 1: v1 render (title too small and partly hidden; see STATUS).
+- Checkpoint 1 (82809d2): v1 render; title too small and partly hidden.
+- v2: title condensed to 74 % width and fitted per half (207 px), halves kept clear of the hair; hair got
+  cel shading, an anime shine band and a soft inner rim light; face got hair shadows and cheek shading;
+  magenta horizon glow behind the skyline; two proper feathers instead of four stray marks.
+- v3: removed flyaway strands (they read as white blades at the temples and bars beside the eyes).
+- v4 (final): +14 % saturation in grading so it holds up next to the channel's saturated thumbnails.
+  Final PNG/JPG committed.
