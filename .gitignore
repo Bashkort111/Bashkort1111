@@ -1,0 +1,4 @@
+.hoplite/
+__pycache__/
+*.pyc
+thumbnails/*/out/*.html
